@@ -1,0 +1,7 @@
+# Convert text file line endings to lf
+# ESLint will warn but won't prevent a push
+# from coinciding with this issue.
+# Might be buggy on Windows.
+* text=auto
+
+*.js text eol=lf
