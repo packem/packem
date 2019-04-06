@@ -33,7 +33,7 @@ In a comparison of Packem against Parcel, each bundler had to compile the entire
 
 ## How Packem Works
 
-<p align="center"><img src="https://raw.githubusercontent.com/packem/packem/master/resources/bundle-cycle.png" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/packem/packem/master/resources/bundling-cycle.png" /></p>
 
 A static configuration (`packem.config.yml`) is used to outline the general flow of the process. From the root of your project, all dependencies are recursively matched, tracked then stacked into a **Module Graph** which is essentially a giant (depending on the nature of your project) mutable flat list of interfaces which represent a _'living resource'_ in your project. Packem works with the principle that each file type is treated as a module even though the same interface is not necessarily maintained.
 
