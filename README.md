@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/packem/packem/master/resources/packem-logo.png" /></p>
+<p align="center"><img width="100" src="https://raw.githubusercontent.com/packem/packem/master/resources/packem-logo.png" /></p>
 
 <h1 align="center">Packem</h1>
 
@@ -6,7 +6,7 @@ Packem is an extensively _precompiled_ general-purpose JavaScript module bundler
 
 ## Features
 
-- Hypersonic speeds that go **2X faster than [ParcelJS](https://parceljs.org/)**.
+- Hypersonic speeds that go **+2X faster than [ParcelJS](https://parceljs.org/)**.
 - **Light** and **efficient** outputs.
 - **Unique configuration style** that will not make you cry.
 - **Code Splitting** with dynamic imports.
@@ -78,4 +78,4 @@ Check the FAQ section to get help on some common caveats.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
