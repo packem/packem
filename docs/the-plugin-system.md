@@ -90,9 +90,9 @@ Depending on the number of JavaScript files in your project, you should've ended
 
 > "With great performance comes great responsibility" &mdash; Packem™.
 
-Using a tree to define a module graph is a pain point since a single mutation would require a visitor to walk through the branches just to reach a certain module. If two or more modules require each other, things become more difficult. Controlling duplication across branches is a burden. All of these manipulations from the runtime context makes it even unbearable. This approach caused a major shift in Packem's architecture.
+Using a tree to define a module graph is a pain point since a single mutation would require a visitor to traverse the branches just to reach a certain module. If two or more modules require each other, things become more difficult. Controlling duplication across branches is a burden. All of these manipulations from the runtime context makes it even unbearable. This approach caused a major shift in Packem's architecture.
 
-The module graph being refactored into a flat list containing extended module interfaces is found to be easier to maintain, making issues like duplication, inter-modular dependencies and code splitting a breeze. This is what a module graph as a flat list appears like during build time:
+The module graph being refactored into a flat list containing extended module interfaces is found to be easier to maintain, making issues like duplication, inter-modular/circular dependencies and code splitting a breeze. This is what a module graph as a flat list appears like during build time:
 
 ```typescript
 export default [
@@ -114,7 +114,7 @@ export default [
 ] as ModuleGraph;
 ```
 
-As much as using functional patterns to update the module graph may seem _cute_, it is a huge leap into anti-performance. The general principle of Packem favors performance over expression. If compatibility is true
+As much as using functional patterns to update the module graph may seem _cute_, it is a huge leap into anti-performance. The general principle of Packem favors _performance over expression_ without selling away features.
 
 ## Built-in events
 
@@ -130,7 +130,7 @@ This event is dispatched before the module graph is generated.
 
 #### The `ConfigurationObject`
 
-The configuration object is a slightly modified version `packem.config.yml`. It includes a few extra fields.
+The configuration object is a slightly modified version of `packem.config.yml`. It includes a few extra fields.
 
 ```typescript
 interface ConfigurationObject {
@@ -144,14 +144,13 @@ interface ConfigurationObject {
   // Absolute path to the output bundle.
   outputPath: string;
   // Absolute path to the output bundle's directory.
-  // If the output path is `./dist/bundle.js`, the
-  // equivalent `outputDir` would be the absolute path prepended
-  // to `./dist/` only.
+  // If the output path is `./dist/bundle.js`, the equivalent
+  // `outputDir` would be the absolute path prepended to `./dist/` only.
   outputDir: string;
   // Output path file name without extension.
   // If the output directory is `./dist/bundle.main.js`, then
   // the equivalent `outputPathFileStem` would be `bundle.main`
-  // i.e. without `.js`
+  // i.e. without `.js`.
   outputPathFileStem: string;
 }
 ```
@@ -238,7 +237,7 @@ onSuccess() {
 
 ### `onEnd`
 
-**Parameters:** `config: ConfigurationObject`. A transformed version of `packem.config.yml`.
+**Parameters:** `config: ConfigurationObject`. A transformed version of `packem.config.yml` exhibiting [this format](https://github.com/packem/packem/blob/master/docs/the-plugin-system.md#the-configurationobject).
 
 **Returns:** `void`.
 
@@ -251,3 +250,10 @@ onEnd(config: ConfigurationObject) {
   console.log(config);
 }
 ```
+
+## Resources
+
+- [Packem: Under the Hood.](https://github.com/packem/packem)
+- [Packem Common Plugins.](https://github.com/packem/packem-plugins)
+
+If you happen to fall into any issue, got lost somewhere in the docs, please report to us how we can update the docs to make it easier for readers. Alternatively, you can contribute to Packem's docs by submitting a PR or filing an issue with the `documentation` tag/filter.

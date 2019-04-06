@@ -10,7 +10,7 @@ Packem is an extensively _precompiled_ general-purpose JavaScript module bundler
 - **Light** and **efficient** outputs.
 - **Unique configuration style** that will not make you cry.
 - **Code Splitting** with dynamic imports.
-- **Comprehensive plugin API** with an elegant approach.
+- **Comprehensive & versatile plugin API** with an elegant approach.
 - Common plugins for smoother development experience.
 
 ## Rationale
