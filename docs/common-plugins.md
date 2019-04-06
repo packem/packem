@@ -1,8 +1,6 @@
 # Common Plugins
 
-These are a set of plugins created to support basic development utilities, extended configurations, styling with SASS/SCSS, stats on output bundles, etc. They are hosted on [this repo](https://github.com/packem/packem-plugins) on the packem github org.
-
-Not all the plugins are ready for production use however some are worthy enough.
+These are a set of plugins created to support basic development utilities, extended configurations, styling with SASS/SCSS, stats on output bundles, etc. They are hosted on [a repo](https://github.com/packem/packem-plugins) on the packem github org.
 
 ## `@packem/file-plugin`
 
