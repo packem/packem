@@ -1,0 +1,20 @@
+{
+  "name": "packem-playground",
+  "version": "0.1.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "(clear && cd .. && yarn build)",
+    "build:packem": "packem",
+    "build:webpack": "webpack index.js --cache=false",
+    "build:parcel": "parcel build index.js --out-dir build-parcel/ --no-cache"
+  },
+  "author": "bukharim96 <bukharim96@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.3.1"
+  },
+  "devDependencies": {}
+}
