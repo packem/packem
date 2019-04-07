@@ -21,7 +21,7 @@ module.exports = PuppyPlugin;
 
 ## Using Event Hooks to manipulate the bundle cycle
 
-To put more sense into our plugin, we'll need an event that _allows us to check if a JavaScript module is added to the module graph_. The event `onModuleBundle` does exactly that. Event hooks are defined as class methods that might or might not take any arguments depending on the event. In this case, `onModuleBundle` takes the _module interface_ (we'll explain this soon) which allows us to read or write to the module graph.
+To put more sense into our plugin, we'll need an event that _allows us to check if a JavaScript module is added to the module graph_. The event `onModuleBundle` does exactly that. Event hooks are defined as class methods that might or might not take any arguments depending on the event. In this case, `onModuleBundle` takes the _module interface_ (more on this later) which allows us to read or write to the module graph.
 
 ```javascript
 const { PackemPlugin } = require("packem");
@@ -37,6 +37,37 @@ class PuppyPlugin extends PackemPlugin {
 
 module.exports = PuppyPlugin;
 ```
+
+## Adding a plugin to `packem.config.yml`
+
+One last step to avail your plugin to a project is adding it to the configuration file. In the `packem.config.yml`, add the following then run the command `packem` in the terminal:
+
+```yml
+root: ./src/index.js
+output: ./dist
+plugins:
+  packem-puppy-plugin: on
+```
+
+Depending on the number of JavaScript files in your project, you should've ended up with some logs in your terminal (`"You bet I have a cute 🐶!"`). Try adding more JavaScript files, rerun `packem` and see what happens.
+
+# Advanced Plugin APIs
+
+## Plugin Rules
+
+There are a few procedures that one needs to take into account to **create**, **publish** and **use** a plugin(s):
+
+- If your plugin is on the `npm` registry as a package, it must be in the form `packem-<name>-plugin` where `<name>` (without the angle brackets) is your plugin name.
+- Your package must export **ONLY ONE** class that extends `PackemPlugin`.
+- All plugins fall under the `plugins` field in the config, relative to `root`, `output` and `transformer`.
+- If a plugin is defined in the config _and is listed to be a common plugin_, it must follow the format `<name>-plugin`. A common plugin is any plugin under the packem scope on npm like `@packem/dev-plugin`, `@packem/file-plugin`. You can find more about common plugins [here](https://github.com/packem/packem/blob/master/docs/common-plugins.md).
+- If a plugin is defined in the config _and is custom_, it must follow the format `packem-<name>-plugin`. Packem can pick this from your plugin's `package.json`. This means your plugin's class doesn't need to follow any format so this is fine.
+
+    ```module.exports = class FunkyApple extends PackemPlugin {}```
+
+- A correctly defined plugin has access to any option(s) passed to it via using `this.pluginConfig` (a prototype property available on `PackemPlugin` sub-classes). For example, if you pass an option `isCool: true` to the plugin, you can refer to it by using `this.pluginConfig` anywhere in your plugin's class.
+- If no options are to be passed to a plugin, you must indicate that it is available so that the object notion is not broken. A YAML-compliant truthy boolean is preferable, particularly `on`. Other truthy booleans include `ON`, `yes` and `YES`, `true` and `TRUE`. For example, `packem-custom-addon-plugin: on` is correct.
+- **Plugins are executed in order of definition (FIFO &mdash; First In, First Out)**. Other bundlers like webpack would pipe several loaders but Packem decided to execute plugins in order of definition to make configuring much less of a pain.
 
 ## Module Interfaces
 
@@ -60,39 +91,15 @@ interface ModuleInterface {
 }
 ```
 
-## Adding a plugin to `packem.config.yml`
-
-One last step to avail your plugin to a project is adding it to the configuration file. This is done by following a few procedures:
-
-- If your plugin is on the `npm` registry as a package, it must be in the form `packem-<name>-plugin` where `<name>` (without the angle brackets) is your plugin name.
-- Your package must export **ONLY ONE** class that extends `PackemPlugin`.
-- All plugins fall under the `plugins` field in the config, relative to `root`, `output` and `transformer`.
-- If a plugin is defined in the config _and is listed to be a common plugin_, it must follow the format `<name>-plugin`. A common plugin is any plugin under the packem scope on npm like `@packem/dev-plugin`, `@packem/file-plugin`. You can find more about common plugins [here](https://github.com/packem/packem/blob/master/docs/common-plugins.md).
-- If a plugin is defined in the config _and is custom_, it must follow the format `packem-<name>-plugin`. Packem can pick this from your plugin's `package.json`. This means your plugin's class doesn't need to follow any format so this is fine.
-
-    ```module.exports = class FunkyApple extends PackemPlugin {}```
-
-- A correctly defined plugin has access to any option(s) passed to it via using `this.pluginConfig` (a prototype property available on `PackemPlugin` sub-classes). For example, if you pass an option `isCool: true` to the plugin, you can refer to it by using `this.pluginConfig` anywhere in your plugin's class.
-- If no options are to be passed to a plugin, you must indicate that it is available so that the object notion is not broken. A YAML-compliant truthy boolean is preferable, particularly `on`. Other truthy booleans include `ON`, `yes` and `YES`, `true` and `TRUE`. For example, `packem-custom-addon-plugin: on` is correct.
-
-In the `packem.config.yml`, add the following then run the command `packem` in the terminal:
-
-```yml
-root: ./src/index.js
-output: ./dist
-plugins:
-  packem-puppy-plugin: on
-```
-
-Depending on the number of JavaScript files in your project, you should've ended up with some logs in your terminal (`"You bet I have a cute 🐶!"`). Try adding more JavaScript files, rerun `packem` and see what happens.
-
-## Why mutation is necessary
+## Mutations, Dangling Modules and a Flat List Module Graph
 
 > "With great performance comes great responsibility" &mdash; Packem™.
 
-Using a tree to define a module graph is a pain point since a single mutation would require a visitor to traverse the branches just to reach a certain module. If two or more modules require each other, things become more difficult. Controlling duplication across branches is a burden. All of these manipulations from the runtime context makes it even unbearable. This approach caused a major shift in Packem's architecture.
+Using a tree to define a module graph is a pain point since a single mutation would require a visitor to traverse the branches just to reach a certain module. If two or more modules require each other, things become more difficult. Controlling duplication across branches is a burden.
 
-The module graph being refactored into a flat list containing extended module interfaces is found to be easier to maintain, making issues like duplication, inter-modular/circular dependencies and code splitting a breeze. This is what a module graph as a flat list appears like during build time:
+If watch mode is enabled in `@packem/dev-plugin`, a deletion(s) can cause module(s) not to be removed from the module graph (*dangled modules*) and vice versa. So how should things be managed? All of these manipulations from the runtime context makes it even unbearable.
+
+This approach caused a major shift in Packem's architecture. The module graph being refactored into a flat list containing extended module interfaces is found to be easier to maintain, making issues like duplication, inter-modular/circular dependencies and code splitting a breeze. This is what a module graph as a flat list appears like during build time:
 
 ```typescript
 export default [
