@@ -33,8 +33,8 @@ const { getAbi } = require("node-abi");
 const fetch = require("node-fetch");
 const { x: extractTarGz } = require("tar");
 
-const PREBUILT_REPO_DATA_URL = process.env.PREBUILT_REPO_DATA_URL;
-const PREBUILT_REPO_URL = process.env.PREBUILT_REPO_URL;
+const PREBUILT_REPO_DATA_URL = process.env.PREBUILT_REPO_DATA_URL || "https://api.github.com/repos/packem/packem/releases/latest";
+const PREBUILT_REPO_URL = process.env.PREBUILT_REPO_URL || "https://github.com/packem/packem/";
 
 if (!PREBUILT_REPO_DATA_URL || !PREBUILT_REPO_URL) {
   console.error("[PACKEM ERR]: You are not authorized to build from source.");
