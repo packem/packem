@@ -1,6 +1,6 @@
 {
   "name": "packem",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "",
   "main": "./index.js",
   "bin": "./scripts/cli.js",
@@ -12,7 +12,7 @@
   },
   "binary": {
     "module_name": "index",
-    "host": "https://github.com/bukharim96/packem/releases/download/",
+    "host": "https://github.com/packem/packem/releases/download/",
     "remote_path": "{version}",
     "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
     "module_path": "./bin",
@@ -23,21 +23,20 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bukharim96/packem.git"
+    "url": "git+https://github.com/packem/packem.git"
   },
-  "author": "bukharim96 <bukharim96@gmail.com>",
+  "author": "bukharim96 <bukharim96@gmail.com>, undefinedbuddy <alimohamuda80@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bukharim96/packem/issues"
+    "url": "https://github.com/packem/packem/issues"
   },
-  "homepage": "https://github.com/bukharim96/packem#readme",
+  "homepage": "https://github.com/packem/packem#readme",
   "dependencies": {
     "@amilajack/node-pre-gyp": "github:amilajack/node-pre-gyp#neon-compat",
     "@babel/core": "^7.2.2",
     "chalk": "^2.4.2",
     "fs-extra": "^7.0.1",
     "js-yaml": "^3.12.1",
-    "neon-cli": "^0.2.0",
     "node-abi": "^2.7.1",
     "node-fetch": "^2.3.0",
     "node-pre-gyp-github": "^1.4.3",
