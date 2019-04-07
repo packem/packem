@@ -101,7 +101,7 @@ interface ModuleInterface {
   content?: string;
   // An array of mangled IDs that represent a module on the flat list
   // module graph. When bundling this module with its dependencies it
-  // is recursively looped over until all its dependency's sub dependenies
+  // is recursively looped over until all its dependency's sub-dependencies
   // have been exhaustively transformed then taken to the serializer (when
   // the same happens to the whole module graph).
   dependencies: string[];
