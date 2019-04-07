@@ -91,6 +91,7 @@ interface ModuleInterface {
   //       let isDynamicModule: boolean = mod.bundle_id !== "root";
   //       // Do something with `isDynamicModule`
   //    }
+  // 
   bundle_id: string;
   // The file extension of this module.
   extension: string;
