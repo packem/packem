@@ -85,6 +85,7 @@ interface ModuleInterface {
   path: string;
   // A tracker that defines whether this module is dynamic or not.
   // If it is equivalent to "root", then it is not dynamic. Otherwise, it is.
+  // 
   // Quick Hack: To check if a module is dynamically imported anywhere,
   // 
   //    onModuleBundle(mod: ModuleInterface) {
