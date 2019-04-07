@@ -19,7 +19,10 @@
     "pkg_path": "."
   },
   "files": [
-    "bin/index.node"
+    "bin/index.node",
+    "scripts",
+    "src",
+    "index.js"
   ],
   "repository": {
     "type": "git",
