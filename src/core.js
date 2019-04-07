@@ -19,7 +19,7 @@ const spinner = ora("Initializing bundle process...").start();
 const PluginEventsDispatcher = require("./PluginEventsDispatcher");
 const bundleTemp = require("./bundleTemp");
 // Get prebuilt rust addons
-const { generateModuleGraph } = require("../native");
+const { generateModuleGraph } = require("../bin");
 
 // Start timer
 const INITIAL_BUNDLE_START_TIME = Date.now();
