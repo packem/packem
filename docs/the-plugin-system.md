@@ -21,7 +21,7 @@ module.exports = PuppyPlugin;
 
 ## Using Event Hooks to manipulate the bundle cycle
 
-To put more sense into our plugin, we'll need an event that _allows us to check if a JavaScript module is added to the module graph_. The event `onModuleBundle` does exactly that. Event hooks are defined as class methods that might or might not take any arguments depending on the event. In this case, `onModuleBundle` takes the _module interface_ (more on this later) which allows us to read or write to the module graph.
+To put more sense into our plugin, we'll need an event that _allows us to check if a JavaScript module is added to the module graph_. The event `onModuleBundle` does exactly that. Event hooks are defined as class methods that might or might not take any arguments depending on the event type. In this case, `onModuleBundle` takes the _module interface_ (more on this later) which allows us to read or write to the module graph.
 
 ```javascript
 const { PackemPlugin } = require("packem");
@@ -53,6 +53,8 @@ Depending on the number of JavaScript files in your project, you should've ended
 
 # Advanced Plugin APIs
 
+Now that you're able to create a basic plugin without understanding much whats going on, go through this section to be able to create more intense Packem plugins.
+
 ## Plugin Rules
 
 There are a few procedures that one needs to take into account to **create**, **publish** and **use** a plugin(s):
@@ -65,7 +67,7 @@ There are a few procedures that one needs to take into account to **create**, **
 
     ```module.exports = class FunkyApple extends PackemPlugin {}```
 
-- A correctly defined plugin has access to any option(s) passed to it via using `this.pluginConfig` (a prototype property available on `PackemPlugin` sub-classes). For example, if you pass an option `isCool: true` to the plugin, you can refer to it by using `this.pluginConfig` anywhere in your plugin's class.
+- A correctly defined plugin has access to any option(s) passed to it via using `this.pluginConfig` (a prototype property available for every plugin). For example, if you pass an option `isCool: true` to the plugin, you can refer to it by using `this.pluginConfig` anywhere in your plugin's class whereby it returns an object.
 - If no options are to be passed to a plugin, you must indicate that it is available so that the object notion is not broken. A YAML-compliant truthy boolean is preferable, particularly `on`. Other truthy booleans include `ON`, `yes` and `YES`, `true` and `TRUE`. For example, `packem-custom-addon-plugin: on` is correct.
 - **Plugins are executed in order of definition (FIFO &mdash; First In, First Out)**. Other bundlers like webpack would pipe several loaders but Packem decided to execute plugins in order of definition to make configuring much less of a pain.
 
@@ -77,17 +79,30 @@ We've dealt with event hooks and successfully used the right event to do what we
 
 ```typescript
 interface ModuleInterface {
-  // The mangled id used to refer to this module.
+  // The mangled ID used to refer to this module.
   id: string;
-  // The file extension of this module.
-  extension: string;
   // The absolute path of this module.
   path: string;
-  
-  // [Deprecated since pre-alpha] Content of this module.
-  // Content doesn't exist on non-JavaScript files so don't
-  // use it if you're matching a non-text-based file type.
+  // A tracker that defines whether this module is dynamic or not.
+  // If it is equivalent to "root", then it is not dynamic. Otherwise, it is.
+  // Quick Hack: To check if a module is dynamically imported anywhere,
+  // 
+  //    onModuleBundle(mod: ModuleInterface) {
+  //       let isDynamicModule: boolean = mod.bundle_id !== "root";
+  //       // Do something with `isDynamicModule`
+  //    }
+  bundle_id: string;
+  // The file extension of this module.
+  extension: string;
+  // Content of this module which doesn't exist on non-JavaScript
+  // files so don't use it if you're matching a non-text-based file type.
   content?: string;
+  // An array of mangled IDs that represent a module on the flat list
+  // module graph. When bundling this module with its dependencies it
+  // is recursively looped over until all its dependency's sub dependenies
+  // have been exhaustively transformed then taken to the serializer (when
+  // the same happens to the whole module graph).
+  dependencies: string[];
 }
 ```
 
