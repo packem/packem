@@ -13,9 +13,15 @@ Packem is an extensively _precompiled_ general-purpose JavaScript module bundler
 - **Comprehensive & versatile plugin API** with an elegant approach.
 - Common plugins for smoother development experience.
 
+> **Note:** As of now, prebuilt Packem binaries are only available for MacOS (x64) and Linux (x64) machines. Prebuilt Windows binaries are to appear soon.
+
+> **Note:** This is an pre-release version. Do not use it in production.
+
+For a quick preview of Packem in action, clone [this repo](https://github.com/bukharim96/packem-lodash-test#readme) and follow the necessary instructions.
+
 ## Rationale
 
-**Packem (alpha) is +2X faster than [Parcel](https://parceljs.org/) (v1.12.3) (with multicore compilation).**
+**Packem (v0.1.3-alpha) is +2X faster than [Parcel](https://parceljs.org/) (v1.12.3) (with multicore compilation).**
 
 Modern bundlers today do optimize your code heavily, minify them and create near-perfect bundles but it comes at an expensive cost, time. The time slice is worth the effort to boost your productivity and not unnecessarily spending too much time on the tool.
 
