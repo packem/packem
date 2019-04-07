@@ -75,7 +75,7 @@ There are a few procedures that one needs to take into account to **create**, **
 
 We've dealt with event hooks and successfully used the right event to do what we needed. But what is a module interface anyway?
 
-**A module interface is an exact in-memory copy of a mutable reference of a module from the module graph in the logic context**. Note that this reference doesn't affect the filesystem i.e. it is _read-only_ and just points to a file. Just like an OS can display file metadata, Packem provides metadata for modules in the module graph as module interfaces. Not all properties can be satisfied for all files like JavaScript vs non-JavaScript file types. A module interface is always in this form:
+**A module interface is an exact in-memory copy of a mutable reference of a module from the module graph available from LC/RC**. Note that this reference doesn't affect the filesystem i.e. it is _read-only_ and just points to a file. Just like an OS can display file metadata, Packem provides metadata for modules in the module graph as module interfaces. Not all properties can be satisfied for all files like JavaScript vs non-JavaScript file types. A module interface is always in this form:
 
 ```typescript
 interface ModuleInterface {
