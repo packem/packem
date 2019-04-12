@@ -2,11 +2,17 @@
 
 <h1 align="center">Packem</h1>
 
+![Travis (.org)](https://img.shields.io/travis/packem/packem.svg)
+![npm](https://img.shields.io/npm/dt/packem.svg)
+![David](https://img.shields.io/david/packem/packem.svg)
+![Gitter](https://img.shields.io/gitter/room/bukharim96/packem_bundler.svg)
+
 Packem is an extensively _precompiled_ general-purpose JavaScript module bundler with a focus on performance, flexibility and extendibility. Its crust is built with [Rust](https://www.rust-lang.org/), a zero-cost abstraction systems programming language with guaranteed memory safety.
 
-> **Note:** As of now, prebuilt Packem binaries are only available for MacOS (x64) and Linux (x64) machines. Prebuilt Windows binaries are to appear soon.
-
-> **Note:** This is an pre-release version. Do not use it in production.
+> **Note:**
+>
+> - As of now, prebuilt Packem binaries are only available for MacOS (x64) and Linux (x64) machines. Prebuilt Windows binaries are to appear soon.
+> - This is a pre-release version. Do not use it in production.
 
 ## Table of Contents
 1. [Why Packem?](#why-packem)
