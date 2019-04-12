@@ -11,7 +11,7 @@ Packem is an extensively _precompiled_ general-purpose JavaScript module bundler
 ## Table of Contents
 1. [Why Packem?](#why-packem)
 2. [How Packem Works](#how-packem-works)
-3. [Installation](#install)
+3. [Installation](#installation)
 4. [Plugins](#plugins)
 5. [Further Reading](#further-reading)
 6. [Contributing](#contributing)
