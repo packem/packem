@@ -8,7 +8,7 @@
   </a>
   <img alt="npm" src="https://img.shields.io/npm/dt/packem.svg">
   <img alt="David" src="https://img.shields.io/david/packem/packem.svg">
-  <a href="https://gitter.im/packem_bundler/">
+  <a href="https://gitter.im/packem_bundler/community">
     <img alt="Gitter" src="https://img.shields.io/gitter/room/bukharim96/packem_bundler.svg">
   </a>
 </p>
