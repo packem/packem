@@ -3,10 +3,14 @@
 <h1 align="center">Packem</h1>
 
 <p align="center">
-  <img alt="Travis (.org)" src="https://img.shields.io/travis/packem/packem.svg">
+  <a target="_blank" href="https://travis-ci.org/packem/packem">
+    <img alt="Travis (.org)" src="https://travis-ci.org/packem/packem.svg?branch=master">
+  </a>
   <img alt="npm" src="https://img.shields.io/npm/dt/packem.svg">
   <img alt="David" src="https://img.shields.io/david/packem/packem.svg">
-  <img alt="Gitter" src="https://img.shields.io/gitter/room/bukharim96/packem_bundler.svg">
+  <a target="_blank" href="https://gitter.im/packem_bundler/">
+    <img alt="Gitter" src="https://img.shields.io/gitter/room/bukharim96/packem_bundler.svg">
+  </a>
 </p>
 
 Packem is an extensively _precompiled_ general-purpose JavaScript module bundler with a focus on performance, flexibility and extendibility. Its crust is built with [Rust](https://www.rust-lang.org/), a zero-cost abstraction systems programming language with guaranteed memory safety.
