@@ -17,7 +17,7 @@ Packem is an extensively _precompiled_ general-purpose JavaScript module bundler
 
 > **Note:**
 >
-> - As of now, prebuilt Packem binaries are only available for MacOS (x64) and Linux (x64) machines. Prebuilt Windows binaries are to appear soon.
+> - As of now, prebuilt Packem binaries are only available for MacOS (_x64_) and Ubuntu (_x64_) machines. Prebuilt Windows binaries are to appear soon.
 > - This is a pre-release version. Do not use it in production.
 
 ## Table of Contents
