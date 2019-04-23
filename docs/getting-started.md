@@ -15,7 +15,7 @@ Through your terminal, run:
 npm install -g packem
 
 # For Yarn, run
-yarn add --global packem
+yarn global add packem
 ```
 
 It is highly recommended to install Packem globally so that any version update could allow multiple Packem projects to compile using the latest installed version. You can check more about the versionings [here](https://github.com/packem/packem/blob/master/CHANGELOG.md). Alternatively, you could install it locally then use a package runner like [npx](https://github.com/zkat/npx) to run Packem on your project locally.
