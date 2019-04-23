@@ -86,7 +86,7 @@ Packem is distrubuted as npm package, you can install packem globally by running
 npm install -g packem
 
 # For Yarn, run
-yarn add --global packem
+yarn global add packem
 ```
 
 Checkout the [Getting Started](docs/getting-started.md) guide for more details.
