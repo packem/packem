@@ -9,9 +9,9 @@ const path = require("path");
 module.paths.unshift(path.join(process.cwd(), "node_modules"));
 
 /**
- * `PluginEventsDispatcher`
+ * @class `PluginEventsDispatcher`
  *
- * Handles global Packem plugin events.
+ * @classdesc Handles global Packem plugin events.
  */
 class PluginEventsDispatcher {
   constructor(configPlugins) {

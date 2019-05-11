@@ -7,25 +7,25 @@ const {
   unlinkSync
 } = require("fs");
 
-// create bin dir & gitignore file
+// Create `bin` directory & `.gitignore` file.
 if (!existsSync("./bin")) {
   mkdirSync("./bin");
   writeFileSync("./bin/.gitignore", "");
 }
 
-// copy binary to bin folder
+// Copy binary to `bin` folder.
 if (existsSync("./native/index.node"))
   createReadStream("./native/index.node").pipe(
     createWriteStream("./bin/index.node")
   );
 
-// delete annoying index.js file
+// Delete annoying `index.js` file.
 if (existsSync("./bin/index.js")) unlinkSync("./bin/index.js");
 
-// create index.node if not exist
+// Create `index.node` if it doesn't exist.
 if (!existsSync("./bin/index.node")) writeFileSync("./bin/index.node", "");
 
-// download binaries
+// Download binaries from Packem's GitHub release page.
 const https = require("https");
 const url = require("url");
 const { sep: pathSeperator } = require("path");
@@ -50,8 +50,9 @@ octokit.repos
     repo: PREBUILT_REPO_NAME
   })
   .then(({ data: { tag_name: VERSION }, status, headers }) => {
-    // handle data
+    // Handle data.
     const TARBALL_URL = `${PREBUILT_REPO_URL}/releases/download/${VERSION}/node-v${NODE_ABI}-${PLATFORM}-${ARCH}.tar.gz`;
+
     https.get(TARBALL_URL, response => {
       if (
         response.statusCode > 300 &&
@@ -76,7 +77,7 @@ octokit.repos
   })
   .catch(e => console.error(e));
 
-// extract then update downloaded src
+// Extract then update downloaded source.
 function updateBinary(response) {
   response.pipe(
     extractTarGz({
