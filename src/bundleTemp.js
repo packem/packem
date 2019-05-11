@@ -1,5 +1,6 @@
-// @todo add polyfill on use only
-// @todo embed packem version
+// @TODO Add fetch polyfill only when necessary.
+// @TODO Embed Packem's current version into the generated bundles
+// to keep track of any breakages caused in different Packem versions.
 module.exports = initialBundleContent => `/* Main Bundle | Packem v0.1.0 (${new Date().toUTCString()}) */
 
 ;(function() {
@@ -15,7 +16,6 @@ ${initialBundleContent}
         __packemModules[modId](__packem.require, __packem.import, module, module.exports);
         return new Promise(function(resolve, reject) {
           resolve(module.exports.default || module.exports);
-          console.log(modId + " resolved from cache.");
         });
       }
       
@@ -38,5 +38,5 @@ ${initialBundleContent}
   }
 
   __packem.reload();
-})();
+}).call(this);
 `;

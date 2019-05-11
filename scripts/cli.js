@@ -1,6 +1,4 @@
 #!/usr/bin/env node
 
-// const [, , ...args] = process.argv;
-
-// Just run packem
+// Run Packem
 require("../src/core");

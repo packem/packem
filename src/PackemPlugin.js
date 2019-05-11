@@ -1,5 +1,8 @@
 /**
- * Base Packem Plugin Class
+ * @class `PackemPlugin`
+ * 
+ * @classdesc This class provides a container for Packem
+ * plugins to gain access to the bundle cycle.
  */
 class PackemPlugin {
   constructor(pluginConfig) {

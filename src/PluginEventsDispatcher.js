@@ -1,14 +1,17 @@
 const PackemPlugin = require("./PackemPlugin");
 
-// PluginEventsDispatcher._initPluginsFromConfig
-// requires this in order to find packem plugins
+/**
+ * `PluginEventsDispatcher._initPluginsFromConfig`
+ * requires this in order to find Packem plugins.
+ */
 const path = require("path");
+
 module.paths.unshift(path.join(process.cwd(), "node_modules"));
 
 /**
- * PluginEventsDispatcher
+ * `PluginEventsDispatcher`
  *
- * Handles global packem plugin events
+ * Handles global Packem plugin events.
  */
 class PluginEventsDispatcher {
   constructor(configPlugins) {
@@ -32,7 +35,7 @@ class PluginEventsDispatcher {
     return output;
   }
 
-  // if (this.plugins is not empty)
+  // if `this.plugins` is not empty
   isHooked() {
     return !!this.plugins.length;
   }
@@ -45,8 +48,9 @@ class PluginEventsDispatcher {
     for (let i = 0; i < pluginNames.length; i++) {
       const pluginName = pluginNames[i];
       const pluginConfig = plugins[pluginName];
+
       let PluginInstance;
-      
+
       try {
         PluginInstance = require("@packem/" + pluginName);
       } catch (error) {

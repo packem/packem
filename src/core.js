@@ -1,11 +1,9 @@
 const path = require("path");
 const {
   existsSync,
-  emptyDir,
   emptyDirSync,
   readFileSync,
-  writeFileSync,
-  statSync
+  writeFileSync
 } = require("fs-extra");
 
 const ora = require("ora");
@@ -14,14 +12,16 @@ const yaml = require("js-yaml");
 const { transformSync } = require("@babel/core");
 const workerFarm = require("worker-farm");
 
-const spinner = ora("Initializing bundle process...").start();
+const spinner = ora("Initializing bundling cycle...").start();
 
 const PluginEventsDispatcher = require("./PluginEventsDispatcher");
 const bundleTemp = require("./bundleTemp");
-// Get prebuilt rust addons
+
+// Get the module graph generator from the
+// logical context (as a Rust addon).
 const { generateModuleGraph } = require("../bin");
 
-// Start timer
+// Start timer.
 const INITIAL_BUNDLE_START_TIME = Date.now();
 const CWD = process.cwd();
 const VERBOSE_BUNDLE = process.argv.includes("--verbose");
@@ -38,54 +38,80 @@ const babelTransformOptions = {
   presets: (transformerConfig && transformerConfig.babelPresets) || [],
   plugins: (transformerConfig && transformerConfig.babelPlugins) || []
 };
-// clean output path
+
+/**
+ * Clean output path. Note that these mutations make up
+ * the `ConfigurationObject`. Some of the fields are ommitted
+ * in the docs for conveniency sake.
+ *
+ * https://packem.github.io/docs/advanced-plugin-apis.html#the-configurationobject
+ */
 config.rootPath = path.resolve(config.root);
 config.outputPath = path.resolve(config.output);
 config.outputDir = path.resolve(path.dirname(config.output));
 config.outputPathFileStem = path.basename(config.outputPath, ".js");
 
-// Setup event dispatcher for plugins
+// Setup event dispatcher for plugins.
 const PluginEvents = new PluginEventsDispatcher(configPlugins);
 
-// onStart event
+/**
+ * @event onStart
+ *
+ * This highlights the beginning of the bundling cycle.
+ */
 PluginEvents.dispatch("onStart", config);
 
-// generate Module Graph
-// @todo better errors for false config.rootPath
+// Generate Module Graph
+// @TODO better errors for false `config.rootPath`
 let initialBundles = Object.create(null);
 let [moduleGraph, moduleGraphLength, dependencyMap] = generateModuleGraph(
   CWD,
   config.rootPath,
-  config.outputPathFileStem // @todo do this internally
+  config.outputPathFileStem // @TODO Do this internally
 );
 
-// onGenerateModuleGraph event
+/**
+ * @event onGenerateModuleGraph
+ *
+ * This is fired when the module graph is generated.
+ */
 PluginEvents.dispatch("onGenerateModuleGraph", moduleGraph);
 
-// Begin the great transformation
+// Begin the transformation process.
 if (VERBOSE_BUNDLE) {
   spinner.succeed(
     "Total module count: " + chalk.bold.yellow(moduleGraphLength)
   );
-  spinner.succeed("Initializing transformation process...");
+  spinner.succeed("Transforming the module graph...");
 }
 
-// @todo find appropriate limit
+// @TODO Find appropriate limit.
 if (moduleGraphLength < 500) {
   // Use single-threaded transform
   for (const modId in moduleGraph) {
     let mod = moduleGraph[modId];
     const bundleId = mod.bundle_id || "root";
 
-    // onBeforeTransform event
+    /**
+     * @event onBeforeTransform
+     *
+     * Just before the transformer kicks in, this event
+     * is fired.
+     */
     PluginEvents.dispatch("onBeforeTransform", mod);
 
     if (mod.extension !== "js") {
-      // onModuleBundle event
+      /**
+       * @event onModuleBundle
+       *
+       * This event is fired after the source is bundled. It doesn't mark
+       * the end of the bundling cycle.
+       */
       const pluginBundleWrap = PluginEvents.dispatch("onModuleBundle", mod);
+
       if (!pluginBundleWrap)
         throw Error(
-          `Packem core does not support ${mod.extension.toUpperCase()} filetypes. Try out the packem-file-plugin.`
+          `Packem does not support ${mod.extension.toUpperCase()} file type(s) out of the box. Try out the "@packem/file-plugin".`
         );
 
       mod.content = pluginBundleWrap;
@@ -101,7 +127,11 @@ ${pluginBundleWrap}
     } else {
       const { code } = transformSync(mod.content, babelTransformOptions);
 
-      // onAfterTransform event
+      /**
+       * @event onAfterTransform
+       *
+       * This event is fired after the source code is transformed.
+       */
       PluginEvents.dispatch("onAfterTransform", code);
 
       mod.content = code;
@@ -119,9 +149,11 @@ ${code}
 
   finalizeBundle();
 } else {
-  // Use multi-threaded transform pool
+  // Use a multi-threaded transform pool.
   if (VERBOSE_BUNDLE)
-    spinner.succeed(chalk.green(" Using multi-threaded transformation."));
+    spinner.succeed(
+      chalk.green(" Using multi-core compilation to transform modules.")
+    );
 
   let transformerWorkers = workerFarm(
     require.resolve("./multiThreadTransformer")
@@ -132,7 +164,12 @@ ${code}
     let mod = moduleGraph[modId];
     const bundleId = mod.bundle_id || "root";
 
-    // onBeforeTransform event
+    /**
+     * @event onBeforeTransform
+     *
+     * Just before the transformer kicks in, this event
+     * is fired.
+     */
     PluginEvents.dispatch("onBeforeTransform", mod);
 
     transformerWorkers(
@@ -140,11 +177,17 @@ ${code}
       babelTransformOptions,
       (content, babelTransformOptions) => {
         if (mod.extension !== "js") {
-          // onModuleBundle event
+          /**
+           * @event onModuleBundle
+           *
+           * This event is fired after the source is bundled. It doesn't mark
+           * the end of the bundling cycle.
+           */
           const pluginBundleWrap = PluginEvents.dispatch("onModuleBundle", mod);
+
           if (!pluginBundleWrap)
             throw Error(
-              `Packem core does not support ${mod.extension.toUpperCase()} filetypes. Try out the packem-file-plugin.`
+              `Packem does not support ${mod.extension.toUpperCase()} file type(s) out of the box. Try out the "@packem/file-plugin".`
             );
 
           mod.content = pluginBundleWrap;
@@ -160,7 +203,11 @@ ${pluginBundleWrap}
         } else {
           let { code } = transformSync(mod.content, babelTransformOptions);
 
-          // onAfterTransform event
+          /**
+           * @event onAfterTransform
+           *
+           * This event is fired after the source code is transformed.
+           */
           PluginEvents.dispatch("onAfterTransform", code);
 
           mod.content = code;
@@ -175,7 +222,7 @@ ${code}
 }`;
         }
 
-        // End worker farm
+        // Worker farm is dropped from this point.
         if (++ret == moduleGraphLength) {
           workerFarm.end(transformerWorkers);
 
@@ -188,9 +235,11 @@ ${code}
 
 function finalizeBundle() {
   if (VERBOSE_BUNDLE) spinner.succeed("Cleaning output directory...");
+
+  // Clear output directory.
   emptyDirSync(config.outputDir);
 
-  // write bundles to output dir
+  // Write bundles to output directory.
   if (VERBOSE_BUNDLE)
     spinner.succeed(
       "Writing bundle(s) to: \n    " +
@@ -198,26 +247,30 @@ function finalizeBundle() {
         chalk.bold.cyan(config.output.replace(/^\.\//, "") || config.output)
     );
 
-  // @todo prevent file write if in development
+  // @TODO Prevent file write if in development mode.
   for (const bundle_id in initialBundles) {
+    // Write the main bundle first.
     if (bundle_id === "root")
-      // main bundle
       writeFileSync(config.outputPath, bundleTemp(initialBundles["root"]));
-    // dynamic import | split bundles
+    // Followed by dynamically imported bundles.
     else
       writeFileSync(
         config.outputPath.replace(/\.js$/, `_${bundle_id}.js`),
-        // @todo embed packem version
+        // @TODO Embed Packem's version.
         `/* Dynamic Bundle | Packem v0.1.0 (${new Date().toUTCString()}) */${
           initialBundles[bundle_id]
         }`
       );
   }
 
-  // onSuccess event
+  /**
+   * @event onSuccess
+   *
+   * This marks the completion of a successful bundle.
+   */
   PluginEvents.dispatch("onSuccess");
 
-  // Finalize
+  // Finalize logging for verbose bundle.
   spinner.succeed(
     chalk.bold(
       `Bundled${(!VERBOSE_BUNDLE && " " + chalk.yellow(moduleGraphLength)) ||
@@ -228,12 +281,14 @@ function finalizeBundle() {
     )
   );
   spinner.stop();
-
-  // writeFileSync("../moduleGraph.json", JSON.stringify(initialBundles, null, 2));
 }
 
-// onBundleComplete event
-// This is used by the @packem/dev-plugin.
+/**
+ * @event onSuccess
+ *
+ * This is used by the `@packem/dev-plugin` and marks the end of a bundle cycle
+ * and the start of development-specific functionalities.
+ */
 PluginEvents.dispatch(
   "onBundleComplete",
   config,
@@ -243,5 +298,9 @@ PluginEvents.dispatch(
   initialBundles
 );
 
-// onEnd event
+/**
+ * @event onEnd
+ *
+ * This is used by the `@packem/dev-plugin` and defines the completion of a full bundle cycle.
+ */
 PluginEvents.dispatch("onEnd", config);
