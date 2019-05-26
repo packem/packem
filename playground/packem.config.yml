@@ -1,0 +1,62 @@
+# Packem Configuration
+root: ./src/index.js
+output: ./build-packem/bundle.js
+transformer: # @todo take (in|ex)cludes into account
+  include: src/**/*.js
+  exclude: node_modules
+  babelPresets: ["@babel/preset-env"]
+  babelPlugins: ["@babel/plugin-syntax-dynamic-import"]
+
+# Packem plugins
+plugins:
+  # typescript-plugin:
+  #   tscOptions:
+  #     # module: commonjs
+  #     target: ES2018
+  #     strict: true
+  #     checkJs: true
+  #     removeComments: true
+  #     types:
+  #       - node
+  # dev-plugin:
+  #   htmlTemplate: ./dist/index.html # @todo
+  #   devServerPort: 3000
+  #   watchFiles: true
+  #   clientSideLogs: true
+  # file-plugin: on
+  # image-plugin:
+  #   extractAssetsDirectory: ./build-packem/img
+  #   imageminOptions:
+  #     png:
+  #       quality: [.8, .6]
+  # minify-plugin:
+  #   # minifyInDevMode: true
+  #   outputFilename: my-bundle.min.js
+  #   terserOptions:
+  #     sourceMap: true
+  #     # output:
+  #     #   beautify: true
+  # packem-optimizer-plugin:
+  #   deadCodeElimination: true
+  #   copyElision: true # 'Tree-shaking'
+  # packem-coffeescript-plugin: on
+  # packem-style-plugin:
+  #   postcss:
+  #     plugins:
+  #       - autoprefixer
+  #       - precss
+  #   sass: # For SASS/SCSS parsing and bundling
+  #     # outputStyle: compressed # Determines the output format of the final CSS style (`nested`, `expanded`, `compact`, `compressed`)
+  #     # outFile: ./build-packem/sass # Must be enabled for sourceMap option to work
+  #     # sourceMap: true # Run packem with `--dynamic-config` to use the project output path
+  #   less: # For SASS/SCSS parsing and bundling
+  #     sourceMap:
+  #       sourceMapFileInline: true
+  # packem-markdown-plugin:
+  #   tables: true
+  #   tasklists: true
+  #   strikethrough: true
+  # packem-extract-assets-plugin:
+  #   assetsDirMap:
+  #     css: "styles"
+  #     md: "data"
