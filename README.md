@@ -15,12 +15,18 @@
 
 Packem is an extensively _precompiled_ general-purpose JavaScript module bundler with a focus on performance, flexibility and extendibility. Its crust is built with [Rust](https://www.rust-lang.org/), a zero-cost abstraction systems programming language with guaranteed memory safety.
 
-> **Note:**
->
-> - As of now, prebuilt Packem binaries are only available for macOS (_x64_) and Ubuntu (_x64_) machines. Binaries for Windows are to appear soon.
-> - This is a pre-release version. Do not use it in production.
+> **Note:** This is a pre-release version. **Do not use it in production**.
+
+## Build Status
+
+As of now, prebuilt Packem binaries are only available for macOS (_x64_) and Ubuntu (_x64_) machines. Binaries for Windows are not available for Addons-compatible versions of Packem (i.e. v1.4 and below).
+
+| Windows | macOS | Linux (Ubuntu) |
+| ------- | ----- | -------------- |
+| ❌      | ✔     | ✔              |
 
 ## Table of Contents
+
 1. [Why Packem?](#why-packem)
 2. [Installation](#installation)
 3. [Plugins](#plugins)
@@ -36,7 +42,7 @@ Packem is an extensively _precompiled_ general-purpose JavaScript module bundler
 - **Unique configuration style** that will not make you cry.
 - **Code Splitting** with dynamic imports.
 - **Comprehensive & versatile plugin API** with an elegant approach.
-- Common plugins for smoother development experience.
+- **Common plugins** for smoother development experience.
 
 **Packem (v0.1.3-alpha) is +2X faster than [Parcel](https://parceljs.org/) (v1.12.3 - with multicore compilation).**
 
@@ -44,7 +50,7 @@ Modern bundlers today do optimize your code heavily, minify them and create near
 
 Packem's real power lies in its usage of Rust, which is the state-of-the-art in high performance solutions. This delivers **close-to-the-metal** speed when compared against other bundlers without comprimising features.
 
-In a comparison of Packem against Parcel, each bundler had to compile the entire [lodash v4.17.1](https://lodash.com/docs/4.17.11) to a single bundle and this was the results of the speed test:
+In a comparison of Packem against Parcel, each bundler had to compile the entire [Lodash v4.17.1](https://github.com/bukharim96/packem-lodash-test#packem-lodash-test) to a single bundle and this was the results of the speed test:
 
 | Test No. | Packem | Parcel |
 | -------- | ------ | ------ |
@@ -54,7 +60,7 @@ In a comparison of Packem against Parcel, each bundler had to compile the entire
 
 ## Installation
 
-Packem is distrubuted as npm package, you can install packem globally by running the following:
+Packem is distrubuted as an npm package, so you can install it globally by executing the following command:
 
 ```bash
 # Default installation method (with npm)
@@ -72,12 +78,12 @@ Packem uses a comprehensive _class-based_ event system. Based off of this, plugi
 
 Most of the common plugins are not included with a single installation of Packem and will require you to install them manually. Some of these common plugins include:
 
-- [dev-plugin](https://packem.github.io/docs/common-plugins.html#packemdev-plugin) - An abstraction of the Packem's development toolkit i.e. the development server, watcher and other development utilities. This means, in essence, Packem doesn't include development tools by default.
-- [file-plugin](https://packem.github.io/docs/common-plugins.html#packemfile-plugin) - Loads common structural and text-based file formats to their appropriate equivalents in JavaScript like _txt_ to string & _YAML_ to a JSON object.
+- [dev-plugin](https://packem.github.io/docs/common-plugins.html#packemdev-plugin) - An abstraction of Packem's development toolkit i.e. the development server, watcher and other development utilities. This means, in essence, Packem doesn't enforce development tools by default.
+- [file-plugin](https://packem.github.io/docs/common-plugins.html#packemfile-plugin) - Loads common structural and text-based file formats to their appropriate equivalents in JavaScript like plain text files to strings & _YAML_ files to their respective JSON object representations.
 - [minify-plugin](https://packem.github.io/docs/common-plugins.html#packemminify-plugin) - Uses [terserjs](https://github.com/terser-js/terser) to crunch and optimize your JavaScript into tiny obfuscated files and write it to the output path.
 - [style-plugin](https://packem.github.io/docs/common-plugins.html#packemstyle-plugin) - Responsible for bundling SASS/SCSS, LESS & PostCSS to plain CSS which is then injected into the webpage at runtime.
 - [image-plugin](https://packem.github.io/docs/common-plugins.html#packemimage-plugin) - Processes a PNG, JPG/JPEG, GIF, WebP or SVG file, compresses it with a few options like `quality`, `compressionRatio` and `dithering` to create efficiently optimized images that still retain fidelity.
-- [bundle-stats-plugin](https://packem.github.io/docs/common-plugins.html#packembundle-stats-plugin) - Checks if your bundles exceed a certain custom constraint/limit and issues tabular diagnostics with details like bundle size vs the pre-defined limit.
+- [bundle-stats-plugin](https://packem.github.io/docs/common-plugins.html#packembundle-stats-plugin) - Checks if your bundles exceed a certain customizable constraint/limit and issues tabular diagnostics with details like bundle size vs the pre-defined limit.
 - [markdown-plugin](https://packem.github.io/docs/common-plugins.html#packemmarkdown-plugin) - Transforms a Markdown file into escaped HTML and then returns the result into the bundling pipeline.
 - [coffeescript-plugin](https://packem.github.io/docs/common-plugins.html#packemcoffeescript-plugin) - Compiles CoffeeScript to JavaScript then appends it to the mainstream bundle.
 
@@ -87,7 +93,6 @@ Most of the common plugins are not included with a single installation of Packem
 - [Code Splitting](https://packem.github.io/docs/code-splitting.html)
 - [Common Plugins](https://packem.github.io/docs/common-plugins.html)
 - [Advanced Plugin APIs](https://packem.github.io/docs/advanced-plugin-apis.html)
-
 
 ## Contributing
 

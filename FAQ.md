@@ -4,11 +4,11 @@ Have any additional question you need an answer for? File an issue at the master
 
 ## Are the binaries cross platform?
 
-As of now, Packem binaries are available for MacOS and Linux only. Custom Window binaries are to appear soon.
+Packem v1.4 binaries are available for MacOS (_x64_) and Ubuntu (_x64_) only. Window binaries are not available. However, the next stable release of Packem will hopefully ensure full cross-platform support.
 
 ## How many output types are available?
 
-Currently, Packem can only output to a browser-compatible IIFE format only. Other output formats are expected soon.
+Currently, Packem v1.4 (and below) can only output to a browser-compatible IIFE format only. Other output formats are expected soon.
 
 ## Can I run my bundles in Node/Electron?
 
@@ -20,7 +20,7 @@ A static configuration is **enough to declaratively tell Packem what to do** in 
 
 ## Why YAML? Why not JSON?
 
-YAML is syntactically pleasing than JSON. Even though V8 can effectively handle JSON parsing, JSON still remains a data interchanging format.
+YAML is syntactically pleasing than JSON. The JSON specification defines it as a data interchanging format and _not a configuration format_.
 
 On the contrary, YAML is meant for configuration-driven tools that need a more elegant way of configuration without all the unnecessary curly braces, quotations, etc. All of this is at the benefit of the developer.
 
@@ -50,7 +50,7 @@ transformer:
     - transform-es2015-block-scoping
 ```
 
-> __Note:__ Packem uses YAML v1.2
+> __Note:__ Packem assumes your configuration complies to YAML v1.2.
 
 ## `.yml` or `.yaml`?
 
