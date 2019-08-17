@@ -1,4 +1,8 @@
+const { version } = require("../package.json");
+
 module.exports = {
-  NativeUtils: require("../bin"),
+  version,
+  utils: require("./utils"),
+  NativeOps: require("../bin"),
   PackemPlugin: require("./PackemPlugin.js")
 };
