@@ -19,11 +19,17 @@ Packem is an extensively _precompiled_ general-purpose JavaScript module bundler
 
 ## Build Status
 
-As of now, prebuilt Packem binaries are only available for macOS (_x64_) and Ubuntu (_x64_) machines. Binaries for Windows are not available for Addons-compatible versions of Packem (i.e. v1.4 and below).
+Since the v0.2 release, prebuilt Packem binaries are available for UNIX systems only. Binaries for Windows are not available for versions below v1.4.
 
 | Windows | macOS | Linux (Ubuntu) |
 | ------- | ----- | -------------- |
-| ❌      | ✔     | ✔              |
+| ❌      | ✔     | ✔             |
+
+Additionally, Node 12 shipped a more stable implementation of the N-API which does not synchronize with the bindings implemented for the LC. For that reason, only the current versions of Node are battle-tested:
+
+| Node 10 | Node 9 | Node 8 |
+| ------- | ----- | -------------- |
+| ✔      | ✔     | ✔             |
 
 ## Table of Contents
 
@@ -57,6 +63,10 @@ In a comparison of Packem against Parcel, each bundler had to compile the entire
 | 1        | 4.23s  | 11.01s |
 | 2 (cold) | 5.12s  | 12.39s |
 | 3        | 4.55s  | 11.80s |
+
+> **Note**
+>
+> Packem v0.2 uses a faster method of parsing the module graph using V8's `JSON.parse()` on larger graphs, making it upto 1.2-2.0x faster than previous versions.
 
 ## Installation
 
@@ -96,11 +106,11 @@ Most of the common plugins are not included with a single installation of Packem
 
 ## Contributing
 
-Packem is a community-led project. We depend on your contributions to sustain this project through financial support, filing issues and presenting PRs. Check the [contribution guidelines](CONTRIBUTING.md) for more details.
+Packem is a community-led project. We depend on your contributions to sustain this project through financial support, filing issues and presenting PRs. Check the [contribution guidelines](https://github.com/packem/packem/blob/master/CONTRIBUTING.md) for more details.
 
 ## FAQ
 
-Check the [FAQ](FAQ.md) page to get help on some common caveats.
+Check the [FAQ](https://github.com/packem/packem/blob/master/FAQ.md) page to get help on some common caveats.
 
 ## License
 
