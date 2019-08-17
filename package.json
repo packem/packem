@@ -28,7 +28,17 @@
     "type": "git",
     "url": "git+https://github.com/packem/packem.git"
   },
-  "author": "bukharim96 <bukharim96@gmail.com>, undefinedbuddy <alimohamuda80@gmail.com>",
+  "author": "bukharim96 <bukharim96@gmail.com>",
+  "contributors": [
+    {
+      "name": "bukharim96",
+      "email": "bukharim96@gmail.com"
+    },
+    {
+      "name": "undefinedbuddy",
+      "email": "alimohamuda80@gmail.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/packem/packem/issues"
@@ -36,6 +46,7 @@
   "homepage": "https://github.com/packem/packem#readme",
   "dependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.5.5",
     "@octokit/rest": "^16.25.0",
     "chalk": "^2.4.2",
     "fs-extra": "^7.0.1",
@@ -43,8 +54,7 @@
     "node-abi": "^2.7.1",
     "node-pre-gyp": "^0.12.0",
     "node-pre-gyp-github": "^1.4.3",
-    "ora": "^3.4.0",
-    "worker-farm": "^1.6.0",
+    "make-dir": "^3.0.0",
     "tar": "^4.4.8"
   }
 }
