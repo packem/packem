@@ -112,6 +112,36 @@ Packem is a community-led project. We depend on your contributions to sustain th
 
 Check the [FAQ](https://github.com/packem/packem/blob/master/FAQ.md) page to get help on some common caveats.
 
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/packem/packem/graphs/contributors"><img src="https://opencollective.com/packem/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/packem/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/packem"><img src="https://opencollective.com/packem/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/packem/contribute)]
+
+<a href="https://opencollective.com/packem/organization/0/website"><img src="https://opencollective.com/packem/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/packem/organization/1/website"><img src="https://opencollective.com/packem/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/packem/organization/2/website"><img src="https://opencollective.com/packem/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/packem/organization/3/website"><img src="https://opencollective.com/packem/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/packem/organization/4/website"><img src="https://opencollective.com/packem/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/packem/organization/5/website"><img src="https://opencollective.com/packem/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/packem/organization/6/website"><img src="https://opencollective.com/packem/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/packem/organization/7/website"><img src="https://opencollective.com/packem/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/packem/organization/8/website"><img src="https://opencollective.com/packem/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/packem/organization/9/website"><img src="https://opencollective.com/packem/organization/9/avatar.svg"></a>
+
 ## License
 
 This project is licensed under the MIT License.
