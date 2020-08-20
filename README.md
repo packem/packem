@@ -1,4 +1,4 @@
-<p align="center"><img width="100" src="https://raw.githubusercontent.com/packem/packem/master/resources/packem-logo.png" /></p>
+<p align="center"><img width="100" src="https://raw.githubusercontent.com/packem/packem/master/resources/logo.png" /></p>
 
 <h1 align="center">Packem</h1>
 
